@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Grid } from "@mui/material";
-import { CustomCard, CustomProgress } from "../../../shared";
 import { Pagination } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { QuizCard } from "./";
 
-const HomeComponent = ({ data, handleClick, handlePagination, totalPages, page }) => {
+const HomeComponent = ({ data, handleClick, handlePagination, totalPages, page, loader }) => {
   return (
     <Grid
       container
@@ -37,7 +36,7 @@ const HomeComponent = ({ data, handleClick, handlePagination, totalPages, page }
         {data.length > 0 ? (
           data.map((item, index) => (
             <Grid item md={1.75}>
-              <CustomCard
+              <QuizCard
                 index={index}
                 title={item.title}
                 handleClick={() => handleClick(item.id, item.title)}
@@ -46,10 +45,11 @@ const HomeComponent = ({ data, handleClick, handlePagination, totalPages, page }
             </Grid>
           ))
         ) : (
-          <CustomProgress />
+          <h3>No Quiz</h3>
         )}
+
       </Grid>
-      <Grid xs={2} sm={4} md={4.8}></Grid>
+      <Grid xs={2} sm={4} md={5.3}></Grid>
       <Grid md={6} marginTop={2} marginBottom={2}>
         <Pagination
           count={totalPages}

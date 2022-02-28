@@ -1,90 +1,91 @@
-import React, { Component } from 'react'
-import { HomeComponent } from '../components';
+import React, { Component } from "react";
+import { HomeComponent } from "../components";
 import base_url from "../../../utils/api";
-import axios from 'axios';
-import history from '../../../utils/history';
-class HomeContainer extends Component {
+import axios from "axios";
+import { token, options } from "../../../utils/helper";
+import { CustomProgress } from "../../../shared";
 
-  state = {
-    posts: [],
-    totalPages:{},
-    page:1
+class HomeContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      totalPages: 0,
+      page: 1,
+      loader: false,
+    };
   }
 
   componentDidMount = () => {
-    const token = localStorage.getItem("sessionToken");
     if (token) {
-      const options = {
-        headers: { "Authorization": `${token}` }
-      };
-      axios.get(`${base_url}/quiz/${0}`, options)
-        .then(res => {
-          const posts = res.data.data.content;
-          this.setState({ posts:posts });
-          this.setState({totalPages: res.data.data.totalPages})
-        }).catch(
-          (error) => {
-            console.log(error);
-            localStorage.removeItem("sessionToken");
-            window.location.href = "/"
-          }
-        )
-    }
-    else {
+      this.setState({ loader: true });
+      axios
+        .get(`${base_url}/quiz/${0}`, options)
+        .then((res) => {
+          const data = res.data.data.content;
+          this.setState({ data: data });
+          this.setState({ totalPages: res.data.data.totalPages });
+          this.setState({ loader: false });
+        })
+        .catch((error) => {
+          console.log(error);
+          localStorage.removeItem("sessionToken");
+          window.location.href = "/";
+          this.setState({ loader: false });
+        });
+    } else {
       localStorage.removeItem("sessionToken");
       window.location.href = "/";
     }
-  }
+  };
 
   handleClick = (id, title) => {
     localStorage.setItem("quizId", id);
     localStorage.setItem("quizTitle", title);
     if (localStorage.getItem("sessionToken")) {
-      history.push("/quizpage");
+      this.props.history.push("/quizpage");
+    } else {
+      window.location.href = "/";
     }
-    else {
-      window.location.href = "/"
-    }
-  }
+  };
 
-  handlePagination=(event,value)=>{
-    this.setState({page:value})
-    const token = localStorage.getItem("sessionToken");
+  handlePagination = (event,value) => {
+    this.setState({ page: value });
     if (token) {
-      const options = {
-        headers: { "Authorization": `${token}` }
-      };
-      axios.get(`${base_url}/quiz/${(value-1)}`, options)
-        .then(res => {
-          const posts = res.data.data.content;
-          this.setState({ posts:posts });
-        }).catch(
-          (error) => {
-            console.log(error);
-            localStorage.removeItem("sessionToken");
-            window.location.href = "/"
-          }
-        )
-    }
-    else {
+      axios
+        .get(`${base_url}/quiz/${value - 1}`, options)
+        .then((res) => {
+          const data = res.data.data.content;
+          this.setState({ data: data });
+        })
+        .catch((error) => {
+          console.log(error);
+          localStorage.removeItem("sessionToken");
+          window.location.href = "/";
+        });
+    } else {
       localStorage.removeItem("sessionToken");
       window.location.href = "/";
     }
-  }
+  };
 
   render() {
-
     return (
-      <HomeComponent
-        data={this.state.posts}
-        handleClick={this.handleClick}
-        handlePagination={this.handlePagination}
-        totalPages={this.state.totalPages}
-        page={this.state.page}
-      />
-    )
-
+      <>
+        {this.state.loader ? (
+          <CustomProgress />
+        ) : (
+          <HomeComponent
+            data={this.state.data}
+            handleClick={this.handleClick}
+            handlePagination={this.handlePagination}
+            totalPages={this.state.totalPages}
+            page={this.state.page}
+          />
+        )}
+      </>
+    );
   }
 }
 
-export default HomeContainer
+export default HomeContainer;

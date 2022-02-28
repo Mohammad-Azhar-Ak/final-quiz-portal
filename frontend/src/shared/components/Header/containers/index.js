@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import HeaderComponent from '../components';
 import axios from "axios";
 import base_url from "../../../../utils/api"
-import history from "../../../../utils/history";
+import history from '../../../../utils/history';
+import { withRouter } from 'react-router-dom';
 
+const token = localStorage.getItem("sessionToken")
 class HeaderContainer extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             anchorEl: null,
         }
@@ -18,12 +20,11 @@ class HeaderContainer extends Component {
     };
 
     handleClose = (id) => {
-        const token = localStorage.getItem('sessionToken');
         if (id == 1) {
-            history.push("/profile");
+            this.props.history.push("/profile");
         }
         if (id == 2) {
-            history.push("/home");
+            this.props.history.push("/home");
         }
         if (id == 3) {
             
@@ -48,10 +49,11 @@ class HeaderContainer extends Component {
             <HeaderComponent
                 anchorEl={this.state.anchorEl}
                 handleClose={this.handleClose}
-                handleMenu={this.handleMenu}                
+                handleMenu={this.handleMenu} 
+                token={token}               
             />
         )
     }
 }
 
-export default HeaderContainer
+export default withRouter(HeaderContainer)

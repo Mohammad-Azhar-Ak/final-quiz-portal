@@ -32,16 +32,16 @@ public class UserServiceImpl implements UserService {
     public LoginSignupResponse createUser(CreateUserRequest request) {
 
         if (StringUtils.isBlank(request.getEmail()))
-            throw new IllegalArgumentException("Null value cannot accepted in email");
+            throw new IllegalArgumentException("Invalid email");
 
         if (StringUtils.isBlank(request.getName()))
-            throw new IllegalArgumentException("Invalid Name");
+            throw new IllegalArgumentException("Invalid name");
 
         if (StringUtils.isBlank(request.getPassword()))
-            throw new IllegalArgumentException("Invalid Password");
+            throw new IllegalArgumentException("Invalid password");
 
         if (StringUtils.isBlank(request.getMobile()) || !request.getMobile().matches("\\d{10}"))
-            throw new IllegalArgumentException("Invalid Mobile Number,Mobile number must be of 10 digits.");
+            throw new IllegalArgumentException("Invalid mobile number,Mobile number must be of 10 digits.");
 
         if (!request.getEmail().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$"))
             throw new IllegalArgumentException("Invalid Email");
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Unauthorized User, signIn Again.");
 
         return new UserResponse(user.getName(), user.getGender(),
-                user.getLinkedIn(), user.getHobbies(), user.getMobile());
+                user.getLinkedIn(), user.getAddress(), user.getMobile());
     }
 
     @Override
@@ -105,12 +105,12 @@ public class UserServiceImpl implements UserService {
 
         user.setName(request.getName());
         user.setMobile(request.getMobile());
-        user.setHobbies(request.getHobbies());
+        user.setAddress(request.getAddress());
         user.setLinkedIn(request.getLinkedIn());
         user.setGender(request.getGender());
         userDao.save(user);
         return new UserResponse(user.getName(), user.getGender(),
-                user.getLinkedIn(), user.getHobbies(), user.getMobile());
+                user.getLinkedIn(), user.getAddress(), user.getMobile());
     }
 
     @Override

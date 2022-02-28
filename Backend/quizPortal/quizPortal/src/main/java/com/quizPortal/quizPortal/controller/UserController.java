@@ -42,7 +42,8 @@ public class UserController {
     }
 
     @PostMapping(path = "/update")
-    public BaseResponse<UserResponse> updateUser(@RequestHeader("Authorization") String token, @RequestBody UpdateUserRequest request){
+    public BaseResponse<UserResponse> updateUser(@RequestHeader("Authorization") String token,
+                                                 @RequestBody UpdateUserRequest request){
         if(StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null.");
         UserResponse user = userService.updateUser(request,token);

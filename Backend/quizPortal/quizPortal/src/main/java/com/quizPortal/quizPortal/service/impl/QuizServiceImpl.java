@@ -35,16 +35,10 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public List<Quiz> getAllQuiz(String token) {
+    public Page<Quiz> getAllQuiz(String token, Integer page) {
         if(userSessionService.validateSession(token)==null)
-            throw new AccessDeniedException("Access denied, Please signIn again");
-
-        return quizDao.findAll();
-    }
-
-    @Override
-    public Page<Quiz> getallQuiz(String token, Integer page) {
-        Pageable pageable = PageRequest.of(page ,5);
+            throw new AccessDeniedException("Token cannot be null.");
+        Pageable pageable = PageRequest.of(page,18);
         return quizDao.findAll(pageable);
     }
 }

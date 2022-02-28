@@ -1,11 +1,7 @@
 import React from "react"
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import { FormLabel } from "@mui/material";
-import { FormControlLabel } from "@material-ui/core";
+import { FormLabel, Radio, RadioGroup, FormControl, FormControlLabel } from "@mui/material";
 
-const RadioButtonComponent = ({ handleChange, value, options, labelValue, flag }) => {
+const RadioButtonComponent = ({ handleChange, value, options, labelValue }) => {
   const marginTop = { marginTop: 5 }
   return (
     <FormControl component="fieldset" style={marginTop}>
@@ -21,8 +17,7 @@ const RadioButtonComponent = ({ handleChange, value, options, labelValue, flag }
           key={index}
           value={item.value}
           control={<Radio
-            size="small"
-            disabled={flag} />}
+            size="small" />}
           label={item.label} />)}
       </RadioGroup>
     </FormControl>

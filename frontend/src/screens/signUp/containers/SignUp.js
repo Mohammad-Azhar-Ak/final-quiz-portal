@@ -4,6 +4,7 @@ import base_url from "../../../utils/api";
 import axios from "axios";
 import { isEmpty } from 'lodash';
 import history from '../../../utils/history';
+import {emailRegex,passwordRegex,mobileRegex} from '../../../utils/helper'
 
 class SignUpContainer extends Component {
 
@@ -40,9 +41,6 @@ class SignUpContainer extends Component {
     }
 
     validation = () => {
-        let regexForEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        let regexForPass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
-        let regexForMob = /^[6-9]\d{9}$/
         let error = {}
 
         if (!this.state.data.email) {
@@ -57,16 +55,16 @@ class SignUpContainer extends Component {
         if (!this.state.data.mobile) {
             error.mobile = "Mobile number cannot be empty"
         }
-        if (this.state.data.email && !regexForEmail.test(this.state.data.email)) {
+        if (this.state.data.email && !emailRegex.test(this.state.data.email)) {
             error.email = "Invalid email!"
         }
-        if (this.state.data.password && !regexForPass.test(this.state.data.password)) {
+        if (this.state.data.password && !passwordRegex.test(this.state.data.password)) {
             error.password = "Password must be of 6 digit, contain uppercase, lowercase character, number and a special character"
         }
         if (this.state.data.password !== this.state.data.confirm_password) {
             error.confirm_password = "Password and confirm password must be same"
         }
-        if (this.state.data.mobile && !regexForMob.test(this.state.data.mobile)) {
+        if (this.state.data.mobile && !mobileRegex.test(this.state.data.mobile)) {
             error.mobile = "Invalid mobile number, mobile number must be of 10 digit"
         }
         this.setState({ error: error });

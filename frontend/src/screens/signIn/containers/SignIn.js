@@ -4,6 +4,7 @@ import base_url from "../../../utils/api";
 import axios from "axios";
 import { isEmpty } from 'lodash';
 import history from '../../../utils/history';
+import {emailRegex} from '../../../utils/helper'
 
 class SignInContainer extends React.Component {
 
@@ -39,7 +40,6 @@ class SignInContainer extends React.Component {
         }
     }
     validation = () => {
-        let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         let error = {}
 
         if (!this.state.data.email) {
@@ -49,7 +49,7 @@ class SignInContainer extends React.Component {
             error.password = "Password cannot be empty"
         }
 
-        if (this.state.data.email && !regex.test(this.state.data.email)) {
+        if (this.state.data.email && !emailRegex.test(this.state.data.email)) {
             error.email = "Invalid email!"
         }
 

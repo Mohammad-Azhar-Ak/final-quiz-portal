@@ -3,29 +3,24 @@ import { ProfileComponent } from "../components";
 import axios from "axios";
 import base_url from "../../../utils/api";
 import { isEmpty } from "lodash";
+import {token, options, mobileRegex} from '../../../utils/helper'
 
 class ProfileContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      responseData: {},
       data: {},
-      flag: true,
       error: {},
     };
   }
 
   componentDidMount() {
-    const token = localStorage.getItem("sessionToken");
     if (token) {
-      const options = {
-        headers: { Authorization: `${token}` },
-      };
       axios
         .get(`${base_url}/user/profile`, options)
         .then((res) => {
           const data = res.data.data;
-          this.setState({ responseData: data });
+          this.setState({ data: data });
         })
         .catch((error) => {
           console.log(error);
@@ -40,34 +35,26 @@ class ProfileContainer extends Component {
 
   handleChange = (key, value) => {
     this.setState({
-      responseData: { ...this.state.responseData, [key]: value },
+      data: { ...this.state.data, [key]: value },
     });
   };
 
   handleClick = () => {
     if (isEmpty(this.validation())) {
-      if (!this.state.flag) {
-        const token = localStorage.getItem("sessionToken");
-        const options = {
-          headers: { Authorization: `${token}` },
-        };
         axios
-          .post(`${base_url}/user/update`, this.state.responseData, options)
-          .then((response) => {})
+          .post(`${base_url}/user/update`, this.state.data, options)
+          .then((response) => {
+            this.props.history.push("/home");
+          })
           .catch((error) => {
             console.log(error);
             window.location.href = "/";
           });
       }
-      this.setState({
-        flag: !this.state.flag,
-      });
-    }
-  };
+  }
   validation = () => {
-    let regexForMob = /^[6-9]\d{9}$/;
     let error = {}
-    if (this.state.responseData.mobile && !regexForMob.test(this.state.responseData.mobile)) {
+    if (this.state.data.mobile && !mobileRegex.test(this.state.data.mobile)) {
       error.mobile = "Invalid mobile number, mobile number must be of 10 digit";
     }
     this.setState({ error: error });
@@ -77,10 +64,9 @@ class ProfileContainer extends Component {
   render() {
     return (
       <ProfileComponent
-        data={this.state.responseData}
+        data={this.state.data}
         handleChange={this.handleChange}
         handleClick={this.handleClick}
-        flag={this.state.flag}
         error={this.state.error}
       />
     );

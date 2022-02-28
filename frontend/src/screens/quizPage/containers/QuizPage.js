@@ -1,107 +1,114 @@
-import React, { Component } from 'react'
-import { QuizPageComponent } from '../components';
+import React, { Component } from "react";
+import { QuizPageComponent } from "../components";
 import base_url from "../../../utils/api";
 import axios from "axios";
-import history from '../../../utils/history';
+import { token, options } from "../../../utils/helper";
+import { CustomProgress } from "../../../shared";
 
 class QuizPageContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      answers: {},
+      result: {},
+      open: false,
+      title: "",
+      loader: false,
+    };
+  }
 
-    state = {
-        list: [],
-        answers: {},
-        res: {},
-        open: false,
-        title: ""
-    }
-
-    componentDidMount = () => {
-        const token = localStorage.getItem('sessionToken');
-        if(token){
-        const options = {
-            headers: { "Authorization": `${token}` }
-        };
-        let id = localStorage.getItem("quizId")
-        axios.get(`${base_url}/quiz/${id}/questions`, options)
-            .then((response) => {
-                const list = response.data.data;
-                this.setState({ list });
-                let title = localStorage.getItem("quizTitle");
-                this.setState({title:title})
-            })
-            .catch((error) => {
-                console.log(error);
-                localStorage.removeItem("sessionToken");
-                window.location.href = "/";
-            });
-        }
-            else{
-                localStorage.removeItem("sessionToken");
-                window.location.href="/";
-            }
-        }
-        onChangeValue = (id, value) => {
-        let { answers } = this.state
-        answers[id] = value;
-        this.setState({ answers: answers });
-    }
-
-    submitQuiz = () => {
-        let { answers } = this.state
-        let listOfQuestion = Object.keys(answers).map((id, index) => {
-            return {
-                "id": id,
-                "answer": answers[id]
-            }
+  componentDidMount = () => {
+    if (token) {
+      this.setState({ loader: true });
+      let id = localStorage.getItem("quizId");
+      axios
+        .get(`${base_url}/quiz/${id}/questions`, options)
+        .then((response) => {
+          const data = response.data.data;
+          this.setState({ data: data });
+          let title = localStorage.getItem("quizTitle");
+          this.setState({ title: title });
+          this.setState({ loader: false });
         })
-        let QuestionList = { listOfQuestion }
-        const token = localStorage.getItem('sessionToken');
-        if(token){
-        const options = {
-            headers: { "Authorization": `${token}` }
-        };
-        let quizId = localStorage.getItem("quizId")
-        axios.post(`${base_url}/quiz/${quizId}/submit`, QuestionList, options)
-            .then((response) => {
-                let res = response.data.data;
-                this.setState({ res: res });
-            })
-            .catch((error) => {
-                console.log(error);
-                localStorage.removeItem("sessionToken");
-                window.location.href = "/";
-            });
-        this.handleOpen();
-        this.setState({ answers: answers });
-        }
-        else{
-            localStorage.removeItem("sessionToken");
-            window.location.href="/";
-        }
+        .catch((error) => {
+          console.log(error);
+          localStorage.removeItem("sessionToken");
+          window.location.href = "/";
+          this.setState({ loader: false });
+        });
+    } else {
+      localStorage.removeItem("sessionToken");
+      window.location.href = "/";
     }
+  };
 
-    handleClose = () => {
-        this.setState({ open: false });
-        history.push("/home");
-    }
+  onChangeValue = (id, value) => {
+    let { answers } = this.state;
+    answers[id] = value;
+    this.setState({ answers: answers });
+  };
 
-    handleOpen = () => {
-        this.setState({ open: true });
+  submitQuiz = () => {
+    let { answers } = this.state;
+    let listOfQuestion = Object.keys(answers).map((id, index) => {
+      return {
+        id: id,
+        answer: answers[id],
+      };
+    });
+    let QuestionList = { listOfQuestion };
+    if (token) {
+      let quizId = localStorage.getItem("quizId");
+      axios
+        .post(`${base_url}/quiz/${quizId}/submit`, QuestionList, options)
+        .then((response) => {
+          let result = response.data.data;
+          this.setState({ result: result });
+        })
+        .catch((error) => {
+          console.log(error);
+          localStorage.removeItem("sessionToken");
+          window.location.href = "/";
+        });
+      this.handleOpen();
+      this.setState({ answers: answers });
+    } else {
+      localStorage.removeItem("sessionToken");
+      window.location.href = "/";
     }
+  };
 
-    render() {
-        return (
-            <QuizPageComponent
-                data={this.state.list}
-                onChangeValue={this.onChangeValue}
-                answers={this.state.answers}
-                submitQuiz={this.submitQuiz}
-                submitResponse={this.state.res}
-                handleOpen={this.state.open}
-                handleClose={this.handleClose}
-                quizTitle={this.state.title}
-            />
-        )
-    }
+  handleClose = () => {
+    this.setState({ open: false });
+    this.props.history.push("/home");
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  render() {
+    const { data, answers, result, open, title, loader } = this.state;
+    return (
+      <>
+        {loader ? (
+          <CustomProgress />
+        ) : (
+          <QuizPageComponent
+            data={data}
+            onChangeValue={this.onChangeValue}
+            answers={answers}
+            submitQuiz={this.submitQuiz}
+            submitResponse={result}
+            handleOpen={open}
+            handleClose={this.handleClose}
+            quizTitle={title}
+          />
+        )}
+      </>
+    );
+  }
 }
 
-export default QuizPageContainer
+export default QuizPageContainer;

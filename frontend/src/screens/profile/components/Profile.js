@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const ProfileComponent = ({ data, handleChange, handleClick, flag, error}) => {
+const ProfileComponent = ({ data, handleChange, handleClick, error}) => {
     const classes = useStyles();
     const paperStyle = {
         padding: "10px 60px",
@@ -68,7 +68,6 @@ const ProfileComponent = ({ data, handleChange, handleClick, flag, error}) => {
                     align="center" >
                     <FormControl>
                         <CustomInput
-                            flag={flag}
                             type="text"
                             placeholder="Enter your name"
                             label="Name"
@@ -76,7 +75,6 @@ const ProfileComponent = ({ data, handleChange, handleClick, flag, error}) => {
                             handleChange={(value) => handleChange("name", value)}
                         />
                         <CustomInput
-                            flag={flag}
                             type="number"
                             placeholder="Enter your mobile number"
                             helperText={error.mobile}
@@ -86,14 +84,12 @@ const ProfileComponent = ({ data, handleChange, handleClick, flag, error}) => {
                             handleChange={(value) => handleChange("mobile", value)}
                         />
                         <CustomRadioButton
-                            flag={flag}
                             options={gender}
                             labelValue="Gender"
                             value={data.gender}
                             handleChange={(value) => handleChange("gender", value)}
                         />
                         <CustomInput
-                            flag={flag}
                             type="text"
                             placeholder="Enter your profile link"
                             label="LinkedIn"
@@ -101,17 +97,16 @@ const ProfileComponent = ({ data, handleChange, handleClick, flag, error}) => {
                             handleChange={(value) => handleChange("linkedIn", value)}
                         />
                         <CustomInput
-                            flag={flag}
                             type="text"
-                            placeholder="Write your hobbies"
-                            label="Hobbies"
-                            value={data.hobbies}
-                            handleChange={(value) => handleChange("hobbies", value)}
+                            placeholder="Enter your address"
+                            label="Address"
+                            value={data.address}
+                            handleChange={(value) => handleChange("address", value)}
                         />
                     </FormControl>
                     <Grid xs={12} >
                         <CustomButton
-                            label={flag ? "Edit" : "Update"}
+                            label={"Update"}
                             type="submit"
                             handleClick={handleClick}
                             className={classes.buttonStyle} />

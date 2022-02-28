@@ -30,22 +30,25 @@ public class QuizController {
         return new BaseResponse<>(HttpStatus.OK.value(), "Quiz created successfully", quiz);
     }
 
-    @GetMapping
-    public BaseResponse<List<Quiz>> getAllQuiz(@RequestHeader("Authorization") String token){
+    @GetMapping(path="/{page}")
+    public BaseResponse<Page<Quiz>> getAllQuiz(@RequestHeader("Authorization") String token,
+                                               @PathVariable("page") Integer page){
         if(StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null.");
-        List<Quiz> list = quizService.getAllQuiz(token);
+        Page<Quiz> list = quizService.getAllQuiz(token, page);
         return new BaseResponse<>(HttpStatus.OK.value(), "Success", list);
     }
 
     @PostMapping(path ="/{quizId}/question")
-    public BaseResponse<Void> addQuestion(@PathVariable("quizId") Integer quizId, @RequestBody CreateQuestionRequest request ){
+    public BaseResponse<Void> addQuestion(@PathVariable("quizId") Integer quizId,
+                                          @RequestBody CreateQuestionRequest request ){
         questionService.addQuestion(quizId, request);
         return new BaseResponse<>(HttpStatus.OK.value(), "Success");
     }
 
     @GetMapping(path ="/{quizId}/questions")
-    public BaseResponse<List<Question>> getAllQuestion(@RequestHeader("Authorization") String token,@PathVariable("quizId") Integer quizId){
+    public BaseResponse<List<Question>> getAllQuestion(@RequestHeader("Authorization") String token,
+                                                       @PathVariable("quizId") Integer quizId){
         if(StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null.");
         List<Question> list = questionService.getAllQuestion(token, quizId);
@@ -53,18 +56,12 @@ public class QuizController {
     }
 
     @PostMapping(path = "{quizId}/submit")
-    public BaseResponse<SubmitResponse> submitQuiz(@RequestHeader("Authorization") String token, @RequestBody SubmitQuizRequest list, @PathVariable("quizId") Integer quizId){
+    public BaseResponse<SubmitResponse> submitQuiz(@RequestHeader("Authorization") String token,
+                                                   @RequestBody SubmitQuizRequest list,
+                                                   @PathVariable("quizId") Integer quizId){
         if(StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null.");
         SubmitResponse scores = questionService.submitQuiz(token, list, quizId);
         return new BaseResponse<>(HttpStatus.OK.value(), "Success", scores);
-    }
-
-    @GetMapping(path="/{page}")
-    public BaseResponse<Page<Quiz>> getallQuiz(@RequestHeader("Authorization") String token, @PathVariable("page") Integer page){
-        if(StringUtils.isBlank(token))
-            throw new AccessDeniedException("Token cannot be null.");
-        Page<Quiz> list = quizService.getallQuiz(token, page);
-        return new BaseResponse<>(HttpStatus.OK.value(), "Success", list);
     }
 }

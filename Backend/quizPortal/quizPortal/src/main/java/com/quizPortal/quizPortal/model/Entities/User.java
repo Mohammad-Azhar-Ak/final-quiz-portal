@@ -5,8 +5,6 @@ import com.quizPortal.quizPortal.model.BaseTime;
 import com.quizPortal.quizPortal.model.Gender;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
 
 @Entity
 public class User extends BaseTime {
@@ -30,7 +28,7 @@ public class User extends BaseTime {
 
     private String linkedIn;
 
-    private String hobbies;
+    private String address;
 
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     private String mobile;
@@ -76,12 +74,12 @@ public class User extends BaseTime {
         this.linkedIn = linkedIn;
     }
 
-    public String getHobbies() {
-        return hobbies;
+    public String getAddress() {
+        return address;
     }
 
-    public void setHobbies(String hobbies) {
-        this.hobbies = hobbies;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getMobile() {

@@ -107,7 +107,7 @@ const SignInComponent = ({ data, handleChange, handleClick, error, handleClose, 
               marginTop: "10px"
             }}>
             <CustomButton
-              label='signIn'
+              label='Sign In'
               type='submit'
               value='Submit'
               handleClick={handleClick} />
@@ -116,7 +116,7 @@ const SignInComponent = ({ data, handleChange, handleClick, error, handleClose, 
             justify='center'
             className={classes.text}
           >
-            <p onClick={handleLink}>Don't have an account? <Link sx={{cursor:"pointer"}}>Sign Up</Link></p>
+            <p onClick={handleLink}>Don't have an account? <Link sx={{cursor:"pointer", color:"blueviolet"}}>Sign Up</Link></p>
           </Grid>
         </Grid>
         <CustomPositionedSnackbar

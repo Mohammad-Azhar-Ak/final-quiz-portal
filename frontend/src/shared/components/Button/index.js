@@ -5,7 +5,6 @@ const CustomButton = ({ label, type, handleClick, value, className}) => {
     return (
         <Button
             type={type}
-           
             margin="normal"
             variant="contained"
             color="secondary"

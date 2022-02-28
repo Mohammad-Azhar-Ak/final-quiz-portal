@@ -3,16 +3,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-import CustomButton from '../Button';
+import {CustomButton} from '../../../shared';
 
 export default function MultiActionAreaCard({ index, title, handleClick }) {
   return (
     <Card sx={{
       maxWidth: 200,
-      backgroundColor: "#f8bbd0",
+      backgroundColor: "#fad3e0",
       border: "solid",
       borderColor: "#801313",
-      textAlign: "center"
+      textAlign: "center",
     }}>
       <CardActionArea>
         <CardContent>

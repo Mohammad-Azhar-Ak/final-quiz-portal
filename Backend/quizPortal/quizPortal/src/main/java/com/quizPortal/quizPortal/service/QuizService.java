@@ -10,7 +10,5 @@ public interface QuizService {
 
     Quiz createQuiz(CreateQuizRequest request);
 
-    List<Quiz> getAllQuiz(String token);
-
-    Page<Quiz> getallQuiz(String token, Integer page);
+    Page<Quiz> getAllQuiz(String token, Integer page);
 }

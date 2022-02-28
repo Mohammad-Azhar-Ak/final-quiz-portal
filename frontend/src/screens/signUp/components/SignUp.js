@@ -126,7 +126,7 @@ function SignUpComponent({ data, handleChange, handleClick, error, handleClose, 
             justify="center"
             sx={{ marginTop: "10px", color: "#801313" }}
           >
-            <p onClick={handleLink}>Already have an account? <Link sx={{ cursor: "pointer" }}>Sign In</Link></p>
+            <p onClick={handleLink}>Already have an account? <Link sx={{ cursor: "pointer", color:"blueviolet" }}>Sign In</Link></p>
           </Grid>
         </Grid>
         <CustomPositionedSnackbar

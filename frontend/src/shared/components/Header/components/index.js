@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Grid } from "@mui/material";
 
-const HeaderComponent = ({ anchorEl, handleClose, handleMenu }) => {
+const HeaderComponent = ({ anchorEl, handleClose, handleMenu, token}) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" >
@@ -18,7 +18,7 @@ const HeaderComponent = ({ anchorEl, handleClose, handleMenu }) => {
             Quiz Portal
           </Typography>
           <div>
-            {localStorage.getItem("sessionToken") &&
+            {token &&
               <IconButton
                 size="large"
                 aria-label="account of current user"
