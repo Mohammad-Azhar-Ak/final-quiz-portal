@@ -28,7 +28,7 @@ public class User extends BaseTime {
 
     private String linkedIn;
 
-    private String address;
+    private String favouriteTopics;
 
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     private String mobile;
@@ -74,12 +74,12 @@ public class User extends BaseTime {
         this.linkedIn = linkedIn;
     }
 
-    public String getAddress() {
-        return address;
+    public String getFavouriteTopics() {
+        return favouriteTopics;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setFavouriteTopics(String favouriteTopics) {
+        this.favouriteTopics = favouriteTopics;
     }
 
     public String getMobile() {

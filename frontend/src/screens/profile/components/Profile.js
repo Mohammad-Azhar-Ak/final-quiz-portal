@@ -12,6 +12,12 @@ import { CustomBackground } from "../../../assets/images";
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
+    root:{
+        backgroundColor: "primary",
+                backgroundImage: `url(${CustomBackground})`,
+                height: "92vh",
+                width: "182.5vh",
+    },
     buttonStyle: {
         "&.MuiButtonBase-root": {
             backgroundColor: "#801313",
@@ -20,6 +26,22 @@ const useStyles = makeStyles(() => ({
             width: "30%",
             padding: "5px",
         }
+    },
+    paperStyle:{
+        padding: "10px 60px",
+        width: 400,
+        margin: "40px auto",
+        height: "75vh",
+        backgroundColor: "#fce9ef",
+        border: "solid",
+        borderColor: "#801313",
+        borderWidth: "10px",
+    },
+    headerStyle:{
+        margin: 0,
+    },
+    iconStyle:{
+        color: "#801313",
     }
 }));
 
@@ -43,24 +65,21 @@ const ProfileComponent = ({ data, handleChange, handleClick, error}) => {
         <Grid
             container
             height="50vh"
-            sx={{
-                backgroundColor: "primary",
-                backgroundImage: `url(${CustomBackground})`,
-                height: "92vh",
-                width: "182.5vh",
-            }}>
+            className={classes.root}
+            >
             <Paper
                 elevation={20}
-                style={paperStyle} >
+                className={classes.paperStyle} >
                 <Grid
                     align="center">
                     <Avatar>
                         <PersonIcon
                             fontSize="large"
-                            sx={{ color: "#801313" }} />
+                            className={classes.iconStyle}
+                            />
                     </Avatar>
                     <h2
-                        style={headerStyle}>
+                        className={classes.headerStyle}>
                         Profile
                     </h2>
                 </Grid>
@@ -98,10 +117,10 @@ const ProfileComponent = ({ data, handleChange, handleClick, error}) => {
                         />
                         <CustomInput
                             type="text"
-                            placeholder="Enter your address"
-                            label="Address"
-                            value={data.address}
-                            handleChange={(value) => handleChange("address", value)}
+                            placeholder="Enter your favourite topics"
+                            label="Favourite topics"
+                            value={data.favouriteTopics}
+                            handleChange={(value) => handleChange("favouriteTopics", value)}
                         />
                     </FormControl>
                     <Grid xs={12} >

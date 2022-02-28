@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 
-const CustomProgress = ({ loader }) => {
-  return <>{loader && <CircularProgress color="primary" />}</>;
+const CustomProgress = ({ }) => {
+  return <CircularProgress color="primary" />;
 };
 export default CustomProgress;

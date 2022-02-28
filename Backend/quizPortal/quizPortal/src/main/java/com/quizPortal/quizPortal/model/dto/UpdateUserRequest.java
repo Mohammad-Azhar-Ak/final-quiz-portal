@@ -7,14 +7,14 @@ public class UpdateUserRequest {
     private String name;
     private Gender gender;
     private String linkedIn;
-    private String address;
+    private String favouriteTopics;
     private String mobile;
 
-    public UpdateUserRequest(String name, Gender gender, String linkedIn, String hobbies, String mobile) {
+    public UpdateUserRequest(String name, Gender gender, String linkedIn, String favouriteTopics, String mobile) {
         this.name = name;
         this.gender = gender;
         this.linkedIn = linkedIn;
-        this.address = hobbies;
+        this.favouriteTopics = favouriteTopics;
         this.mobile = mobile;
     }
 
@@ -42,12 +42,12 @@ public class UpdateUserRequest {
         this.linkedIn = linkedIn;
     }
 
-    public String getAddress() {
-        return address;
+    public String getFavouriteTopics() {
+        return favouriteTopics;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setFavouriteTopics(String favouriteTopics) {
+        this.favouriteTopics = favouriteTopics;
     }
 
     public String getMobile() {

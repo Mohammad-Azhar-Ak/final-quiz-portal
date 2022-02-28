@@ -5,6 +5,9 @@ import { AnswerDialog, QuestionCard } from "./";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
+  root:{
+    backgroundColor: "#fce9ef",
+  },
   buttonStyle: {
     "&.MuiButtonBase-root": {
       backgroundColor: "#801313",
@@ -14,6 +17,9 @@ const useStyles = makeStyles(() => ({
       padding: "5px",
       right: "16px",
     },
+    gridStyle:{
+      padding: "20px",
+    }
   },
 }));
 const QuizComponent = ({
@@ -31,9 +37,7 @@ const QuizComponent = ({
     <>
       <Grid
         container
-        sx={{
-          backgroundColor: "#fce9ef",
-        }}
+        className={classes.root}
       >
         <Grid
           container
@@ -81,9 +85,7 @@ const QuizComponent = ({
         >
           <Grid
             item
-            sx={{
-              padding: "20px",
-            }}
+            className={classes.gridStyle}
           >
             <CustomButton
               label="Submit"

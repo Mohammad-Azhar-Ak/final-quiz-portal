@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Unauthorized User, signIn Again.");
 
         return new UserResponse(user.getName(), user.getGender(),
-                user.getLinkedIn(), user.getAddress(), user.getMobile());
+                user.getLinkedIn(), user.getFavouriteTopics(), user.getMobile());
     }
 
     @Override
@@ -105,12 +105,12 @@ public class UserServiceImpl implements UserService {
 
         user.setName(request.getName());
         user.setMobile(request.getMobile());
-        user.setAddress(request.getAddress());
+        user.setFavouriteTopics(request.getFavouriteTopics());
         user.setLinkedIn(request.getLinkedIn());
         user.setGender(request.getGender());
         userDao.save(user);
         return new UserResponse(user.getName(), user.getGender(),
-                user.getLinkedIn(), user.getAddress(), user.getMobile());
+                user.getLinkedIn(), user.getFavouriteTopics(), user.getMobile());
     }
 
     @Override

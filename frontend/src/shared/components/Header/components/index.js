@@ -8,8 +8,20 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Grid } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyle = makeStyles(() => ({
+  menuStyle:{
+    top:"33px", 
+    left:"-15px",
+  },
+  gridStyle:{
+    padding:"10px",
+  }
+}))
 
 const HeaderComponent = ({ anchorEl, handleClose, handleMenu, token}) => {
+  const classes = useStyle();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" >
@@ -44,9 +56,9 @@ const HeaderComponent = ({ anchorEl, handleClose, handleMenu, token}) => {
               }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              sx={{top:"33px", left:"-15px",}}
+              className={classes.menuStyle}
             >
-              <Grid sx={{ padding: "10px" }}>
+              <Grid className={classes.gridStyle}>
                 <Grid> <MenuItem onClick={() => handleClose(1)}>Profile</MenuItem></Grid>
                 <Grid> <MenuItem onClick={() => handleClose(2)}>Home</MenuItem></Grid>
                 <Grid> <MenuItem onClick={() => handleClose(3)}>LogOut</MenuItem></Grid>

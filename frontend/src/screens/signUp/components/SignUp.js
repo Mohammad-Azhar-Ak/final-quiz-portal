@@ -32,7 +32,21 @@ const useStyles = makeStyles(() => ({
   signUpStyle: {
     padding: "30px",
     backgroundColor: "#fce9ef",
-  }
+  },
+  formStyle: {
+    minWidth: "70%",
+  },
+  gridStyle: {
+    marginTop: "10px",
+  },
+  textStyle:{
+    marginTop: "10px", 
+    color: "#801313"
+  },
+  linkStyle: {
+    cursor: "pointer",
+    color: "blueviolet",
+  },
 }));
 
 function SignUpComponent({ data, handleChange, handleClick, error, handleClose, open, handleLink }) {
@@ -72,7 +86,7 @@ function SignUpComponent({ data, handleChange, handleClick, error, handleClose, 
             Sign Up
           </Typography>
           <FormControl
-            sx={{ minWidth: "70%" }}>
+            className={classes.formStyle}>
             <CustomInput
               label='Name'
               type='text'
@@ -114,7 +128,7 @@ function SignUpComponent({ data, handleChange, handleClick, error, handleClose, 
               helperText={error.confirm_password}
               placeholder="Enter confirm password" />
           </FormControl>
-          <Grid sx={{ marginTop: "10px" }}>
+          <Grid className={classes.gridStyle}>
             <CustomButton
               label='Sign Up'
               type='submit'
@@ -124,13 +138,13 @@ function SignUpComponent({ data, handleChange, handleClick, error, handleClose, 
           <Grid
             item
             justify="center"
-            sx={{ marginTop: "10px", color: "#801313" }}
+            className={classes.textStyle}
           >
-            <p onClick={handleLink}>Already have an account? <Link sx={{ cursor: "pointer", color:"blueviolet" }}>Sign In</Link></p>
+            <p onClick={handleLink}>Already have an account? <Link className={classes.linkStyle}>Sign In</Link></p>
           </Grid>
         </Grid>
         <CustomPositionedSnackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           open={open}
           onClose={handleClose}
           message="Email Already Exist"

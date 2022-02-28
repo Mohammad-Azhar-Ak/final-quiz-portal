@@ -5,9 +5,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { makeStyles } from "@mui/styles";
+import { ClassNames } from '@emotion/react';
 
+const useStyles = makeStyles(() => ({
+  titleStyle:{
+    color:"#801313", 
+    textAlign:"center",
+  },
+  buttonStyle:{
+    color:"#801313",
+  }
+}))
 const AnswerDialog = ({ open, handleClose, submitResponse }) => {
-
+  const classes = useStyles();
   return (
     <div>
       <Dialog
@@ -18,7 +29,7 @@ const AnswerDialog = ({ open, handleClose, submitResponse }) => {
         fullWidth
         maxWidth="xs"
       >
-        <DialogTitle sx={{color:"#801313", textAlign:"center"}}>{"-----Final Score-----"}</DialogTitle>
+        <DialogTitle className={classes.titleStyle} >{"-----Final Score-----"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description" sx={{textAlign:"center"}}>
             <h3>Right Answers:   {submitResponse.rightCount}</h3>
@@ -27,7 +38,7 @@ const AnswerDialog = ({ open, handleClose, submitResponse }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color:"#801313"}}>
+          <Button onClick={handleClose} className={classes.buttonStyle}>
             Continue
           </Button>
         </DialogActions>

@@ -1,14 +1,14 @@
-import React from 'react';
-import Avatar from '@mui/material/Avatar';
-import { CustomButton, CustomPositionedSnackbar } from '../../../shared';
-import { CustomInput } from '../../../shared';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
-import { CustomLogo } from '../../../assets/images';
-import { FormControl, Link } from '@mui/material';
-import LoginIcon from '@mui/icons-material/Login';
+import React from "react";
+import Avatar from "@mui/material/Avatar";
+import { CustomButton, CustomPositionedSnackbar } from "../../../shared";
+import { CustomInput } from "../../../shared";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
+import { CustomLogo } from "../../../assets/images";
+import { FormControl, Link } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,20 +16,20 @@ const useStyles = makeStyles(() => ({
   },
   imageStyle: {
     paddingLeft: "45px",
-     padding: 30,    
+    padding: 30,
     maxHeight: 619,
   },
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#fce9ef',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fce9ef",
     border: "solid",
     borderColor: "#801313",
     borderWidth: "10px",
     padding: "30px",
     paddingTop: "100px",
-    paddingBottom: "100px"
+    paddingBottom: "100px",
   },
   signinStyle: {
     padding: "30px",
@@ -38,25 +38,34 @@ const useStyles = makeStyles(() => ({
   text: {
     marginTop: "10px",
     color: "#801313",
-  }
+  },
+  formStyle: {
+    minWidth: "70%",
+  },
+  gridStyle: {
+    marginTop: "10px",
+  },
+  linkStyle: {
+    cursor: "pointer",
+    color: "blueviolet",
+  },
 }));
 
-const SignInComponent = ({ data, handleChange, handleClick, error, handleClose, open, handleLink }) => {
+const SignInComponent = ({
+  data,
+  handleChange,
+  handleClick,
+  error,
+  handleClose,
+  open,
+  handleLink,
+}) => {
   const classes = useStyles();
 
   return (
-    <Grid
-      container
-      component="main"
-      className={classes.root}>
-      <Grid
-        item
-        xs={0}
-        md={6} >
-        <img
-          src={CustomLogo}
-          className={classes.imageStyle}
-        />
+    <Grid container component="main" className={classes.root}>
+      <Grid item xs={0} md={6}>
+        <img src={CustomLogo} className={classes.imageStyle} />
       </Grid>
       <Grid
         item
@@ -67,62 +76,52 @@ const SignInComponent = ({ data, handleChange, handleClick, error, handleClose, 
         square
         className={classes.signinStyle}
       >
-        <Grid
-          className={classes.paper}
-        >
+        <Grid className={classes.paper}>
           <Avatar>
-            <LoginIcon
-              color="secondary"
-            />
+            <LoginIcon color="secondary" />
           </Avatar>
-          <Typography
-            component="h1"
-            variant="h5"
-          >
+          <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <FormControl
-            sx={{ minWidth: "70%" }} >
+          <FormControl className={classes.formStyle}>
             <CustomInput
-              label='Email'
-              type='text'
+              label="Email"
+              type="text"
               value={data.email}
-              handleChange={(value) => handleChange(value, 'email')}
+              handleChange={(value) => handleChange(value, "email")}
               error={error.email}
               helperText={error.email}
               placeholder="Enter your email"
             />
             <CustomInput
-              label='Password'
-              type='password'
+              label="Password"
+              type="password"
               value={data.password}
-              handleChange={(value) => handleChange(value, 'password')}
+              handleChange={(value) => handleChange(value, "password")}
               error={error.password}
               helperText={error.password}
               placeholder="Enter your password"
             />
           </FormControl>
-          <Grid
-            sx={{
-              marginTop: "10px"
-            }}>
+          <Grid className={classes.gridStyle}>
             <CustomButton
-              label='Sign In'
-              type='submit'
-              value='Submit'
-              handleClick={handleClick} />
+              label="Sign In"
+              type="submit"
+              value="Submit"
+              handleClick={handleClick}
+            />
           </Grid>
-          <Grid item
-            justify='center'
-            className={classes.text}
-          >
-            <p onClick={handleLink}>Don't have an account? <Link sx={{cursor:"pointer", color:"blueviolet"}}>Sign Up</Link></p>
+          <Grid item justify="center" className={classes.text}>
+            <p onClick={handleLink}>
+              Don't have an account?{" "}
+              <Link className={classes.linkStyle}>Sign Up</Link>
+            </p>
           </Grid>
         </Grid>
         <CustomPositionedSnackbar
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "right"
+            horizontal: "left",
           }}
           open={open}
           onClose={handleClose}
@@ -130,7 +129,7 @@ const SignInComponent = ({ data, handleChange, handleClick, error, handleClose, 
         />
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default SignInComponent
+export default SignInComponent;
