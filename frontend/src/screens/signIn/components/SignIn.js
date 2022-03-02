@@ -6,9 +6,9 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
-import { CustomLogo } from "../../../assets/images";
+import { signInImg } from "../../../assets/images";
 import { FormControl, Link } from "@mui/material";
-import LoginIcon from "@mui/icons-material/Login";
+import LockIcon from '@mui/icons-material/Lock';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -65,7 +65,7 @@ const SignInComponent = ({
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={0} md={6}>
-        <img src={CustomLogo} className={classes.imageStyle} />
+        <img src={signInImg} className={classes.imageStyle} />
       </Grid>
       <Grid
         item
@@ -78,7 +78,7 @@ const SignInComponent = ({
       >
         <Grid className={classes.paper}>
           <Avatar>
-            <LoginIcon color="secondary" />
+            <LockIcon color="secondary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in

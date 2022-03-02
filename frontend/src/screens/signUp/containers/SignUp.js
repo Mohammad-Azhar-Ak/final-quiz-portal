@@ -62,7 +62,7 @@ class SignUpContainer extends Component {
       !passwordRegex.test(this.state.data.password)
     ) {
       error.password =
-        "Password must be of 6 digit, contain uppercase, lowercase character, number and a special character";
+        "Password atleast of 6 digit, contain uppercase, lowercase character, number and a special character";
     }
     if (this.state.data.password !== this.state.data.confirm_password) {
       error.confirm_password = "Password and confirm password must be same";
@@ -83,14 +83,15 @@ class SignUpContainer extends Component {
   };
 
   render() {
+    const {data,error,open} = this.state;
     return (
       <SignUpComponent
-        data={this.state.data}
+        data={data}
         handleChange={this.handleChange}
         handleClick={this.handleClick}
-        error={this.state.error}
+        error={error}
         handleClose={this.handleClose}
-        open={this.state.open}
+        open={open}
         handleLink={this.handleLink}
       />
     );

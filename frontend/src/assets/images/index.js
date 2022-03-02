@@ -1,9 +1,9 @@
-const CustomLogo = require('./ELearning.jpg')
-const SignUpImg = require('./ELearning.jpg')
-const CustomBackground = require('./profile30.jpeg')
+const signInImg = require('./publicPagesImg.jpg')
+const SignUpImg = require('./publicPagesImg.jpg')
+const CustomBackground = require('./customBackground.jpeg')
 
 export{
-    CustomLogo,
+    signInImg ,
     SignUpImg,
     CustomBackground
 }

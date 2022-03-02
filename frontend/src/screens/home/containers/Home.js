@@ -30,8 +30,8 @@ class HomeContainer extends Component {
         .catch((error) => {
           console.log(error);
           localStorage.removeItem("sessionToken");
-          window.location.href = "/";
           this.setState({ loader: false });
+          window.location.href = "/";
         });
     } else {
       localStorage.removeItem("sessionToken");
@@ -49,7 +49,7 @@ class HomeContainer extends Component {
     }
   };
 
-  handlePagination = (event,value) => {
+  handlePagination = (event, value) => {
     this.setState({ page: value });
     if (token) {
       axios
@@ -70,17 +70,18 @@ class HomeContainer extends Component {
   };
 
   render() {
+    const { data, totalPages, page } = this.state;
     return (
       <>
         {this.state.loader ? (
           <CustomProgress />
         ) : (
           <HomeComponent
-            data={this.state.data}
+            data={data}
             handleClick={this.handleClick}
             handlePagination={this.handlePagination}
-            totalPages={this.state.totalPages}
-            page={this.state.page}
+            totalPages={totalPages}
+            page={page}
           />
         )}
       </>

@@ -3,7 +3,7 @@ import { ProfileComponent } from "../components";
 import axios from "axios";
 import base_url from "../../../utils/api";
 import { isEmpty } from "lodash";
-import {token, options, mobileRegex} from '../../../utils/helper'
+import { token, options, mobileRegex } from '../../../utils/helper'
 
 class ProfileContainer extends Component {
   constructor(props) {
@@ -41,16 +41,16 @@ class ProfileContainer extends Component {
 
   handleClick = () => {
     if (isEmpty(this.validation())) {
-        axios
-          .post(`${base_url}/user/update`, this.state.data, options)
-          .then((response) => {
-            this.props.history.push("/home");
-          })
-          .catch((error) => {
-            console.log(error);
-            window.location.href = "/";
-          });
-      }
+      axios
+        .post(`${base_url}/user/update`, this.state.data, options)
+        .then((response) => {
+          this.props.history.push("/home");
+        })
+        .catch((error) => {
+          console.log(error);
+          window.location.href = "/";
+        });
+    }
   }
   validation = () => {
     let error = {}
@@ -62,12 +62,13 @@ class ProfileContainer extends Component {
   };
 
   render() {
+    const { data, error } = this.state
     return (
       <ProfileComponent
-        data={this.state.data}
+        data={data}
         handleChange={this.handleChange}
         handleClick={this.handleClick}
-        error={this.state.error}
+        error={error}
       />
     );
   }

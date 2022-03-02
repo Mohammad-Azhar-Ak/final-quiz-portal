@@ -65,14 +65,15 @@ class SignInContainer extends Component {
   };
 
   render() {
+    const {data,error,open} = this.state;
     return (
       <SignInComponent
-        data={this.state.data}
+        data={data}
         handleChange={this.handleChange}
         handleClick={this.handleClick}
-        error={this.state.error}
+        error={error}
         handleClose={this.handleClose}
-        open={this.state.open}
+        open={open}
         handleLink={this.handleLink}
       />
     );
