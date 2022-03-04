@@ -1,7 +1,6 @@
 package com.quizPortal.quizPortal.advice;
 
 import com.quizPortal.quizPortal.model.dto.BaseErrorResponse;
-import com.quizPortal.quizPortal.model.dto.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.AccessDeniedException;

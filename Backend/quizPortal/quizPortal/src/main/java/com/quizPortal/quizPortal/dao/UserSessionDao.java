@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserSessionDao extends JpaRepository<UserSession, Integer> {
-
         UserSession findByToken(String token);
 }

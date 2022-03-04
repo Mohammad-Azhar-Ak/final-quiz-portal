@@ -2,7 +2,6 @@ package com.quizPortal.quizPortal.service.impl;
 
 import com.quizPortal.quizPortal.model.Entities.User;
 import com.quizPortal.quizPortal.model.Entities.UserSession;
-import com.quizPortal.quizPortal.dao.UserSessionDao;
 import com.quizPortal.quizPortal.model.dto.CreateUserRequest;
 import com.quizPortal.quizPortal.model.dto.LoginSignupResponse;
 import com.quizPortal.quizPortal.model.dto.UpdateUserRequest;
@@ -25,23 +24,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserSessionService userSessionService;
 
-    @Autowired
-    UserSessionDao userSessionDao;
-
     @Override
     public LoginSignupResponse createUser(CreateUserRequest request) {
 
         if (StringUtils.isBlank(request.getEmail()))
-            throw new IllegalArgumentException("Invalid email");
+            throw new IllegalArgumentException("Email cannot be empty or null.");
 
         if (StringUtils.isBlank(request.getName()))
-            throw new IllegalArgumentException("Invalid name");
+            throw new IllegalArgumentException("Name cannot be empty or null.");
 
         if (StringUtils.isBlank(request.getPassword()))
-            throw new IllegalArgumentException("Invalid password");
+            throw new IllegalArgumentException("Password cannot be empty or null.");
 
         if (StringUtils.isBlank(request.getMobile()) || !request.getMobile().matches("\\d{10}"))
-            throw new IllegalArgumentException("Invalid mobile number,Mobile number must be of 10 digits.");
+            throw new IllegalArgumentException("Invalid mobile number, Mobile number must be of 10 digits.");
 
         if (!request.getEmail().matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$"))
             throw new IllegalArgumentException("Invalid Email");
@@ -70,15 +66,10 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null.");
 
-        UserSession userSession = userSessionDao.findByToken(token);
-
-        if (userSession == null || userSession.getSignOutTime() != null)
-            throw new AccessDeniedException("Invalid user");
-
+        UserSession userSession = userSessionService.validateSession(token);
         User user = userSession.getUser();
-
         if (user == null)
-            throw new IllegalArgumentException("Unauthorized User, signIn Again.");
+            throw new IllegalArgumentException("Unauthorized User.");
 
         return new UserResponse(user.getName(), user.getGender(),
                 user.getLinkedIn(), user.getFavouriteTopics(), user.getMobile());
@@ -93,15 +84,12 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Name cannot be null or empty");
 
         if (StringUtils.isBlank(request.getMobile()) || !request.getMobile().matches("\\d{10}"))
-            throw new IllegalArgumentException("Invalid mobile number.");
+            throw new IllegalArgumentException("Invalid mobile number, Mobile number must be of 10 digits.");
 
-        UserSession userSession = userSessionDao.findByToken(token);
-        if (userSession == null)
-            throw new AccessDeniedException("Invalid user.");
-
+        UserSession userSession = userSessionService.validateSession(token);
         User user = userSession.getUser();
         if (user == null)
-            throw new AccessDeniedException("Invalid user");
+            throw new AccessDeniedException("Unauthorized user");
 
         user.setName(request.getName());
         user.setMobile(request.getMobile());
@@ -123,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findByEmail(request.getEmail());
         if (user == null)
-            throw new IllegalArgumentException("User Not Registered");
+            throw new IllegalArgumentException("User not registered");
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
         if (!request.getEmail().equals(user.getEmail()) || !bCryptPasswordEncoder.matches(request.getPassword(),

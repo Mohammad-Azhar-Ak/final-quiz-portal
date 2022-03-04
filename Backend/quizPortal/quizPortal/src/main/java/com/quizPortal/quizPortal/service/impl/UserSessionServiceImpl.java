@@ -46,12 +46,9 @@ public class UserSessionServiceImpl implements UserSessionService {
         if(StringUtils.isBlank(token))
             throw new AccessDeniedException("Token cannot be null");
 
-        UserSession loginUser = userSessionDao.findByToken(token);
-        if(loginUser==null || loginUser.getSignOutTime()!=null)
-            throw new AccessDeniedException("Invalid user");
+        UserSession loginUser = validateSession(token);
 
         loginUser.setSignOutTime(new Date());
         userSessionDao.save(loginUser);
-
     }
 }
